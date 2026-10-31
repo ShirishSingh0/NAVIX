@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NAVIX Moto</string>
+    <string name="title_activity_main">NAVIX Moto</string>
+    <string name="package_name">com.navix.companion</string>
+    <string name="custom_url_scheme">com.navix.companion</string>
+</resources>

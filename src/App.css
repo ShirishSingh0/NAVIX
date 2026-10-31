@@ -1,0 +1,362 @@
+.app-layout {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: #07080a;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ─── WORKSPACE (Device Stage) ─────────────────────────────────────────── */
+.workspace {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, #15181e 0%, #08090b 70%, #030405 100%);
+  overflow: hidden;
+  padding: 24px;
+}
+
+.cockpit-atmosphere {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.cockpit-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #999999;
+  font-weight: 600;
+  margin-bottom: 24px;
+  backdrop-filter: blur(8px);
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34c759;
+  box-shadow: 0 0 8px #34c759;
+  animation: pulse 1.8s infinite;
+}
+
+/* Handlebar Mount Simulation */
+.handlebar-mount {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 580px;
+  height: 28px;
+  pointer-events: none;
+  z-index: -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.handlebar-bar {
+  width: 100%;
+  height: 16px;
+  background: linear-gradient(180deg, #333333 0%, #141414 50%, #050505 100%);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.mount-clamp {
+  position: absolute;
+  width: 80px;
+  height: 36px;
+  background: #1c1c1c;
+  border: 2px solid #2e2e2e;
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9);
+}
+
+.state-pill {
+  margin-top: 24px;
+  font-size: 12px;
+  color: #777777;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 5px 12px;
+  border-radius: 12px;
+  border: 1px solid #222222;
+}
+
+.state-pill strong {
+  color: #ffffff;
+}
+
+/* ─── DEVELOPER CONTROL PANEL ─────────────────────────────────────────── */
+.dev-panel {
+  width: 320px;
+  min-width: 320px;
+  height: 100vh;
+  background-color: #0f1013;
+  border-left: 1px solid #20232a;
+  padding: 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: #a8a8a8;
+  font-size: 13px;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+  scrollbar-width: thin;
+  scrollbar-color: #2a2a2a #111111;
+}
+
+.dev-panel::-webkit-scrollbar {
+  width: 5px;
+}
+.dev-panel::-webkit-scrollbar-track {
+  background: #111111;
+}
+.dev-panel::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+
+.panel-header {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #20232a;
+}
+
+.panel-section {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #1c1e24;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6a7180;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.btn {
+  background: #1a1c22;
+  border: 1px solid #2d313b;
+  color: #c0c4ce;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:hover {
+  background: #252832;
+  border-color: #3f4553;
+  color: #ffffff;
+}
+
+.btn-active {
+  background: #2d3342;
+  border-color: #4a5568;
+  color: #ffffff;
+}
+
+.btn-chip {
+  background: #17191f;
+  border: 1px solid #282c37;
+  color: #a0a6b5;
+  width: 36px;
+  height: 26px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.btn-chip:hover {
+  background: #232731;
+  color: #ffffff;
+}
+
+.chip-active {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+/* Radio States List */
+.radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-height: 210px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.radio-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.radio-item-active {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.radio-item input[type='radio'] {
+  accent-color: #ffffff;
+  cursor: pointer;
+}
+
+.radio-label {
+  font-size: 12px;
+  color: #9da3af;
+}
+
+.radio-item-active .radio-label {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Controls & Inputs */
+.control-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.label {
+  font-size: 12px;
+  color: #8c93a0;
+}
+
+.value-badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #17191f;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid #282c37;
+}
+
+.slider {
+  width: 100%;
+  accent-color: #ffffff;
+  cursor: pointer;
+}
+
+.input-label {
+  display: block;
+  font-size: 11px;
+  color: #7a8190;
+  margin-bottom: 3px;
+}
+
+.text-input {
+  width: 100%;
+  background: #14161c;
+  border: 1px solid #252933;
+  color: #ffffff;
+  padding: 6px 9px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+}
+
+.text-input:focus {
+  border-color: #4c5468;
+}
+
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+/* Traffic Light Control */
+.btn-traffic {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #16181f;
+  border: 1px solid #262a35;
+  color: #9299a8;
+  padding: 6px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.lamp-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #444;
+}
+
+.lamp-dot.red {
+  background: #ff3b30;
+}
+.lamp-dot.amber {
+  background: #ffcc00;
+}
+.lamp-dot.green {
+  background: #34c759;
+}
+
+.traffic-active {
+  background: #232733;
+  color: #ffffff;
+  border-color: #464f63;
+}
+
+/* Checkbox Row */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #a4abb8;
+  cursor: pointer;
+}
+
+.checkbox-row input[type='checkbox'] {
+  accent-color: #ffffff;
+  cursor: pointer;
+}
