@@ -2,7 +2,7 @@ name: Build & Release NAVIX Android APK
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
     tags:
       - 'v*'
   workflow_dispatch:
@@ -20,17 +20,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
-
-      - name: Install Node dependencies
-        run: npm install
-
-      - name: Build Web Application
-        run: npm run build
-
-      - name: Sync Capacitor Android
-        run: npx @capacitor/cli sync android
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -41,6 +32,19 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Build Web Application
+        run: npm run build
+
+      - name: Copy & Sync Web Assets to Android
+        run: |
+          mkdir -p android/app/src/main/assets/public
+          cp -r dist/* android/app/src/main/assets/public/
+          cp capacitor.config.json android/app/src/main/assets/capacitor.config.json
+          npx cap sync android || true
+
       - name: Grant execute permission for gradlew
         run: chmod +x android/gradlew
 
@@ -49,7 +53,7 @@ jobs:
           cd android
           ./gradlew assembleDebug --stacktrace
 
-      - name: Rename APK for Direct Release
+      - name: Prepare APK Asset
         run: |
           cp android/app/build/outputs/apk/debug/app-debug.apk navix-companion.apk
 
@@ -63,14 +67,14 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.0
-          name: "NAVIX Moto Companion APK"
+          name: "NAVIX Moto Companion v1.0.0"
           body: |
             ### 🏍️ NAVIX Moto Companion Android App
 
-            Direct 1-click download for your Android phone.
+            Direct 1-click APK download for your Android phone.
 
             #### 📥 Download:
-            Click **`navix-companion.apk`** below to download directly to your phone.
+            Download **[`navix-companion.apk`](https://github.com/ShirishSingh0/NAVIX/releases/download/v1.0.0/navix-companion.apk)** and install it directly on your phone.
           files: |
             navix-companion.apk
         env:
