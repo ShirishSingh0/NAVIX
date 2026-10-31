@@ -24,13 +24,13 @@ jobs:
           cache: 'npm'
 
       - name: Install Node dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build Web Application
         run: npm run build
 
       - name: Sync Capacitor Android
-        run: npx cap sync android
+        run: npx @capacitor/cli sync android
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -49,37 +49,29 @@ jobs:
           cd android
           ./gradlew assembleDebug --stacktrace
 
-      - name: Rename APK for Release
+      - name: Rename APK for Direct Release
         run: |
-          cp android/app/build/outputs/apk/debug/app-debug.apk navix-companion-v1.0.apk
+          cp android/app/build/outputs/apk/debug/app-debug.apk navix-companion.apk
 
-      - name: Upload APK Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: NAVIX-Companion-app-debug
-          path: navix-companion-v1.0.apk
+          name: navix-companion-apk
+          path: navix-companion.apk
 
-      - name: Create GitHub Release
+      - name: Create or Update GitHub Release
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
         with:
           tag_name: v1.0.0
-          name: "NAVIX Moto Companion v1.0.0"
+          name: "NAVIX Moto Companion APK"
           body: |
-            ### 🏍️ NAVIX Motorcycle Companion App (Android)
-            
-            Minimalist companion app for the **NAVIX Motorcycle Navigation Display (ESP-32)**.
-            
-            #### Features:
-            - 🔍 **Google Places Autocomplete**: Real-time address and landmark suggestions.
-            - 🏍️ **Two-Wheeler Navigation**: Google Routes API configured specifically for motorcycle/bike transit.
-            - 📡 **ESP-32 BLE Sync**: Direct telemetry streaming (manoeuvre arrow, distance countdown, speed, ETA) to your handlebar gauge.
-            - 🎨 **Minimal High-Contrast UI**: Designed for motorcycle riders with zero clutter.
-            
-            #### Installation:
-            1. Download `navix-companion-v1.0.apk` attached below.
-            2. Open the file on your Android phone and install.
+            ### 🏍️ NAVIX Moto Companion Android App
+
+            Direct 1-click download for your Android phone.
+
+            #### 📥 Download:
+            Click **`navix-companion.apk`** below to download directly to your phone.
           files: |
-            navix-companion-v1.0.apk
+            navix-companion.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
