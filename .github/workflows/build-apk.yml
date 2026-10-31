@@ -1,9 +1,14 @@
-name: Build NAVIX Android APK
+name: Build & Release NAVIX Android APK
 
 on:
   push:
     branches: [ main, master ]
+    tags:
+      - 'v*'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -44,8 +49,37 @@ jobs:
           cd android
           ./gradlew assembleDebug --stacktrace
 
+      - name: Rename APK for Release
+        run: |
+          cp android/app/build/outputs/apk/debug/app-debug.apk navix-companion-v1.0.apk
+
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: NAVIX-Companion-app-debug
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: navix-companion-v1.0.apk
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main'
+        with:
+          tag_name: v1.0.0
+          name: "NAVIX Moto Companion v1.0.0"
+          body: |
+            ### 🏍️ NAVIX Motorcycle Companion App (Android)
+            
+            Minimalist companion app for the **NAVIX Motorcycle Navigation Display (ESP-32)**.
+            
+            #### Features:
+            - 🔍 **Google Places Autocomplete**: Real-time address and landmark suggestions.
+            - 🏍️ **Two-Wheeler Navigation**: Google Routes API configured specifically for motorcycle/bike transit.
+            - 📡 **ESP-32 BLE Sync**: Direct telemetry streaming (manoeuvre arrow, distance countdown, speed, ETA) to your handlebar gauge.
+            - 🎨 **Minimal High-Contrast UI**: Designed for motorcycle riders with zero clutter.
+            
+            #### Installation:
+            1. Download `navix-companion-v1.0.apk` attached below.
+            2. Open the file on your Android phone and install.
+          files: |
+            navix-companion-v1.0.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
